@@ -1,0 +1,6 @@
+website:
+  sidebar:
+    contents:
+      - index.ipynb
+      - 00_simulations.ipynb
+      - 01_FastQ.ipynb
