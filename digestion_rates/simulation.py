@@ -5,8 +5,3 @@ __all__ = []
 
 # %% ../00_simulations.ipynb 3
 #| export
-
-# %% ../00_simulations.ipynb 4
-import numpy as np
-import pandas as pd
-
