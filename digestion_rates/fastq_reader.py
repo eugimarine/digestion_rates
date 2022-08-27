@@ -44,7 +44,7 @@ def count_unique_sequences(dz):
     df = df.applymap(lambda x: len(set(x)) if isinstance(x,list) else 0)
     return df
 
-# %% ../01_FastQ.ipynb 13
+# %% ../01_FastQ.ipynb 14
 class FastQ():
     def __init__(self, fastq_file, plate_name=None):
         self.fastq_file = fastq_file
@@ -57,6 +57,6 @@ class FastQ():
             
         fastq = extract_dictionary(self.fastq_file, self.plate_name)
         df_fastq = count_unique_sequences(fastq)
-        return df_fastq
+        return SequencesCells(df_fastq, self.plate_name)
 
             
