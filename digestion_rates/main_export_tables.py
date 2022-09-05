@@ -8,12 +8,12 @@ from .fastq_reader import SequencesCells, FastQ
 import sys
 import glob
 
-# %% ../main.ipynb 8
+# %% ../main.ipynb 10
 def main():
     input_path = sys.argv[1]
     output_path = sys.argv[2]
     plates = None
-    for f in glob.glob('.'+'/*.fastq.gz'):
+    for f in glob.glob(input_path+'/*.fastq.gz'):
         plate = FastQ(f).parse_file()
         if plates is None:
             plates = plate
