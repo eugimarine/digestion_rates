@@ -8,7 +8,7 @@ from .fastq_reader import SequencesCells, FastQ
 import sys
 import glob
 
-# %% ../main.ipynb 10
+# %% ../main.ipynb 9
 def main():
     input_path = sys.argv[1]
     output_path = sys.argv[2]
