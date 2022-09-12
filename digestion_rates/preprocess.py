@@ -63,6 +63,10 @@ class SequencesCells():
     
     def save_table(self, path, compression='gzip'):
         self.table.to_csv(path, compression=compression)
+        
+    def read_csv(self, path, compression='gzip'):
+        self.table = pd.read_csv(path, index_col=0, compression=compression)
+        return self
 
 # %% ../01_SeqCell.ipynb 19
 def concat_plates(sequences_cells, n_plates=None):
