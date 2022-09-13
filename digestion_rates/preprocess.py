@@ -9,13 +9,13 @@ import pandas as pd
 import gzip
 from Bio import SeqIO
 
-# %% ../01_SeqCell.ipynb 6
+# %% ../01_SeqCell.ipynb 5
 def extract_umi_cb(nm):
     nm = nm.split(' ')[0]
     cb, umi = nm.split('_')[1:3]
     return umi, cb
 
-# %% ../01_SeqCell.ipynb 8
+# %% ../01_SeqCell.ipynb 7
 def parse_plate(path, plate_name):
     ids = []
     with gzip.open(path, "rt") as handle:
@@ -32,7 +32,7 @@ def parse_plate(path, plate_name):
     return seqcell_long
 
 
-# %% ../01_SeqCell.ipynb 11
+# %% ../01_SeqCell.ipynb 10
 class SequencesCells():
     def __init__(self, df=None):
         self.table = df
@@ -52,7 +52,7 @@ class SequencesCells():
         return self
     
     def select_plate(self, plate):
-        df = self.set_index('plate').loc[plate, :].reset_index()
+        df = self.table.set_index('plate').loc[plate, :].reset_index()
         return SequencesCells(df)
     
     def parse_file(self, fastq_file, plate_name=None):
@@ -67,6 +67,11 @@ class SequencesCells():
     def read_csv(self, path, compression='gzip'):
         self.table = pd.read_csv(path, index_col=0, compression=compression)
         return self
+    def to_wide_format(self):
+        df = self.table
+        df['cb'] = df.apply(lambda x: x.plate +'_'+ x.cb , axis= 1)
+        df = df.pivot(index='seq', columns= 'cb', values= 'counts')
+        return df
 
 # %% ../01_SeqCell.ipynb 19
 def concat_plates(sequences_cells, n_plates=None):
