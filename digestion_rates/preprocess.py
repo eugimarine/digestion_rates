@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 import gzip
 from Bio import SeqIO
+from pathlib import Path
 
 # %% ../01_SeqCell.ipynb 5
 def extract_umi_cb(nm):
@@ -56,8 +57,9 @@ class SequencesCells():
         return SequencesCells(df)
     
     def parse_file(self, fastq_file, plate_name=None):
+        fastq_file = Path(fastq_file)
         if plate_name is None:
-            plate_name = '-'.join(fastq_file.split('_')[0].split('-')[1:])
+            plate_name = '-'.join(fastq_file.name.split('_')[0].split('-')[1:])
         self.table = parse_plate(fastq_file, plate_name)
         return self
     
@@ -68,7 +70,7 @@ class SequencesCells():
         self.table = pd.read_csv(path, index_col=0, compression=compression)
         return self
     def to_wide_format(self):
-        df = self.table
+        df = self.table.copy()
         df['cb'] = df.apply(lambda x: x.plate +'_'+ x.cb , axis= 1)
         df = df.pivot(index='seq', columns= 'cb', values= 'counts')
         return df
