@@ -25,6 +25,8 @@ d = { 'settings': { 'branch': 'master',
                                                                                           'digestion_rates/preprocess.py'),
                                             'digestion_rates.preprocess.extract_umi_cb': ( 'seqcell.html#extract_umi_cb',
                                                                                            'digestion_rates/preprocess.py'),
+                                            'digestion_rates.preprocess.filter_group': ( 'seqcell.html#filter_group',
+                                                                                         'digestion_rates/preprocess.py'),
                                             'digestion_rates.preprocess.parse_plate': ( 'seqcell.html#parse_plate',
                                                                                         'digestion_rates/preprocess.py')},
             'digestion_rates.simulation': {}}}
