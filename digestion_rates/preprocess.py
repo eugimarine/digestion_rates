@@ -23,9 +23,9 @@ def parse_plate(path, plate_name):
     with gzip.open(path, "rt") as handle:
         for record in SeqIO.parse(handle, "fastq"):
             umi, cb = extract_umi_cb(str(record.id))
-            # cb = plate_name + '_' + cb 
+            cb = plate_name + '_' + cb 
             sequence = str(record.seq)
-            id_item = ( plate_name, sequence, cb, umi)
+            id_item = (plate_name, sequence, cb, umi)
             ids.append(id_item)
     df = pd.DataFrame(ids, columns=['plate', 'seq', 'cb','umi'])
     dedup_df = df.drop_duplicates().reset_index(drop=True)
@@ -38,20 +38,13 @@ def parse_plate(path, plate_name):
 class SequencesCells():
     def __init__(self, df=None):
         self.table = df
-        
-    def join_plate(self, sequences_cells):
-        addtable = sequences_cells.table
-        addplates = addtable['plate'].unique()
-        inplates = self.table['plate'].unique()
-        plates_to_add = [p for p in addplates if p not in inplates]
-        if len(plates_to_add) == 0:
-            return self
-        n_plates = len(list(inplates)+list(plates_to_add))
-        other = addtable.set_index('plate').loc[plates_to_add, :].reset_index()
-        cat_table = pd.concat([self.table, other])
-        seq_grouped = cat_table.groupby('seq')
-        self.table =seq_grouped.filter(lambda x: len(x['plate'].unique()) == n_plates).reset_index(drop=True)
-        return self
+
+    def __getitem__(self, key):
+        try:
+            out = self.table[key]
+        except:
+            out = self.table.loc[key]
+        return out
     
     def select_plate(self, plate):
         df = self.table.set_index('plate').loc[plate, :].reset_index()
@@ -76,7 +69,7 @@ class SequencesCells():
         df = df.pivot(index='seq', columns= 'cb', values= 'counts')
         return df
 
-# %% ../01_SeqCell.ipynb 19
+# %% ../01_SeqCell.ipynb 17
 def filter_group(x, n_plates):
     if len(x['plate'].unique()) == n_plates:
         return x
