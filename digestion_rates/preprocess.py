@@ -68,6 +68,8 @@ class SequencesCells():
         df['cb'] = df.apply(lambda x: x.plate +'_'+ x.cb , axis= 1)
         df = df.pivot(index='seq', columns= 'cb', values= 'counts')
         return df
+    def apply_prefix_plate_to_cb(self):
+        self.table['cb'] = self.table.apply(lambda x: x.plate +'_'+ x.cb , axis= 1)
 
 # %% ../01_SeqCell.ipynb 17
 def filter_group(x, n_plates):
