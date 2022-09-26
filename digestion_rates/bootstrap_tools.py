@@ -2,7 +2,7 @@
 
 # %% auto 0
 __all__ = ['bootstrap_cells', 'digestion_profile_matrix', 'correlate_sequence', 'cross_correlation_on_all_sequences',
-           'bootstrap_cross_correlation']
+           'bootstrap_population', 'bootstrap_cross_correlation']
 
 # %% ../03_Boostrap_correlation.ipynb 4
 import pandas as pd
@@ -45,21 +45,23 @@ def cross_correlation_on_all_sequences(g0_profile, inter_profile):
 
 
 # %% ../03_Boostrap_correlation.ipynb 17
+def bootstrap_population(seqcell, pop, samples_bootstrap):
+    all_g0 = seqcell.loc[seqcell['sort_population']==pop]
+    g0_boot = bootstrap_cells(all_g0, samples_bootstrap)
+    g0_digprof = digestion_profile_matrix(g0_boot)
+    return g0_digprof
+
+# %% ../03_Boostrap_correlation.ipynb 18
 def bootstrap_cross_correlation(seqcell, populations= [0,1], samples_bootstrap=200, n_iter=100):    
     cross_correlations = []
 
     for _ in range(n_iter):
-        all_g0 = seqcell.loc[seqcell['sort_population']==populations[0]]
-        g0_boot = bootstrap_cells(all_g0, samples_bootstrap)
-        g0_digprof = digestion_profile_matrix(g0_boot)
-
-        all_inter = seqcell.loc[seqcell['sort_population']==populations[1]]
-        inter_boot = bootstrap_cells(all_inter, samples_bootstrap)
-        inter_digprof = digestion_profile_matrix(inter_boot)
-
+        g0_digprof = bootstrap_population(seqcell, populations[0], samples_bootstrap)
+        print(g0_digprof)
+        inter_digprof = bootstrap_population(seqcell, populations[0], samples_bootstrap)
         cc = cross_correlation_on_all_sequences(g0_digprof, inter_digprof)
-
         cross_correlations.append(cc)
+
     cat_correlations = pd.concat(cross_correlations, axis=0, join='inner')
     mean_cc = cat_correlations.groupby(cat_correlations.index).mean()
     se_cc = cat_correlations.groupby(cat_correlations.index).sem()
