@@ -48,10 +48,4 @@ class AnnoSequencesCells(SequencesCells):
         self.group = dz
         return self
     
-    def remove_ntc(self):
-        pass
-    
-    def drop_mnase_unit(self, mnase_to_drop):
-        pass
-        
     
