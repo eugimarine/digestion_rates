@@ -77,6 +77,6 @@ def iter_bootstrap_cc(seqcell, populations= [0,1], samples_bootstrap=200, n_iter
     for _ in range(n_iter):
         cc = single_iteration_bootstrap_cc(seqcell, populations, samples_bootstrap)
         cross_correlations.append(cc)
+        
+    return cross_correlations
 
-    mean_cc, se_cc, max_cc = average_results_bootstrap(cross_correlations)
-    return mean_cc, se_cc, max_cc
