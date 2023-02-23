@@ -152,8 +152,8 @@ def fit_ode(residual_fn, params, time, x, method='leastsq', eps=None):
     kws = {'eps':eps}
     return minimize(residual_fn, params, args=(time, x), kws=kws, method=method)
 
-# %% ../04_ODEmodel.ipynb 33
+# %% ../04_ODEmodel.ipynb 34
 # | export 
 
-# %% ../04_ODEmodel.ipynb 34
+# %% ../04_ODEmodel.ipynb 35
 # | export 

@@ -85,4 +85,8 @@ d = { 'settings': { 'branch': 'master',
                                                                                                                               'digestion_rates/save_digestion_matrix.py'),
                                                        'digestion_rates.save_digestion_matrix.digestion_profile_from_count_matrix': ( 'digestion_profile_per_sequence.html#digestion_profile_from_count_matrix',
                                                                                                                                       'digestion_rates/save_digestion_matrix.py')},
+            'digestion_rates.sequence_digestion_matrix': { 'digestion_rates.sequence_digestion_matrix.count_sequences_from_mother': ( 'digestion_profile_per_sequence.html#count_sequences_from_mother',
+                                                                                                                                      'digestion_rates/sequence_digestion_matrix.py'),
+                                                           'digestion_rates.sequence_digestion_matrix.digestion_profile_from_count_matrix': ( 'digestion_profile_per_sequence.html#digestion_profile_from_count_matrix',
+                                                                                                                                              'digestion_rates/sequence_digestion_matrix.py')},
             'digestion_rates.simulation': {}}}
