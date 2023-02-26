@@ -40,7 +40,7 @@ def plot_fitted_odes(data_fitted, t_fit, measured, model_result, xlim=None, ylim
     return ax
 
 # %% ../04_ODEmodel.ipynb 6
-def initialize_params(data, initial_rate_guess='random', init_hidden=None, kout_guess=None, initial_guess_bounds=[0.0001, 1], vary_initial_conditions=True):
+def initialize_params(data, initial_rate_guess='random', init_hidden=None, kout_guess=None, initial_guess_bounds=[0.0001, 1], vary_initial_conditions=True, initial_cond_eps=0.1):
     """ Inizialize parameters for ODEs. 
     If initial_guess is 'random' then a vector of random variables [0,1) is created
     If kin_guess and kout_guess are None then the model doesn't include creation and distruction rate, provide a value otherwise"""
@@ -59,7 +59,7 @@ def initialize_params(data, initial_rate_guess='random', init_hidden=None, kout_
     params.add('k_inp', value=0, vary=False)
 
     for nm,i in enumerate(initial_conditions):
-        params.add('x'+str(nm)+'0', value=i, min=0, vary=vary_initial_conditions)
+        params.add('x'+str(nm)+'0', value=i+initial_cond_eps, min=0, vary=vary_initial_conditions)
 
     # reaction rates 
     for nm, k in enumerate(initial_rate_guess):
